@@ -1,4 +1,3 @@
-using System.Reflection;
 using UnityEngine;
 public class Launcher : MonoBehaviour
 {
@@ -10,6 +9,7 @@ public class Launcher : MonoBehaviour
     Vector2 endPos;
     void Update()
     {
+#if UNITY_EDITOR || UNITY_STANDALONE
         if (!canShoot) return;
         if (Input.GetMouseButtonDown(0))
         {
@@ -18,11 +18,31 @@ public class Launcher : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             endPos = Input.mousePosition;
-            Vector2 dir = endPos - startPos;
-            if (dir.magnitude > 50)
-            {
-                Shoot(dir.normalized);
-            }
+            ShootCheck();
+        }
+#else
+       if (!canShoot) return;
+       if (Input.touchCount > 0)
+       {
+           Touch touch = Input.GetTouch(0);
+           if (touch.phase == TouchPhase.Began)
+           {
+               startPos = touch.position;
+           }
+           if (touch.phase == TouchPhase.Ended)
+           {
+               endPos = touch.position;
+               ShootCheck();
+           }
+       }
+#endif
+    }
+    void ShootCheck()
+    {
+        Vector2 dir = endPos - startPos;
+        if (dir.magnitude > 50)
+        {
+            Shoot(dir.normalized);
         }
     }
     void Shoot(Vector2 direction)

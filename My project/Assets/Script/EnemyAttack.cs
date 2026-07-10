@@ -28,11 +28,24 @@ public class EnemyAttack : MonoBehaviour
     {
         canAttack = false;
 
-        Damageable damageable = target.GetComponent<Damageable>();
+        PlayerParry parry = target.GetComponent<PlayerParry>();
 
-        if (damageable != null)
+        if (parry != null && parry.IsParrying)
         {
-            damageable.TakeDamage(damage);
+            GetComponent<EnemyController>().Stun(2f);
+        }
+        else
+        {
+            Damageable damageable = target.GetComponent<Damageable>();
+
+            if (damageable != null)
+            {
+                damageable.TakeDamage(damage);
+                if (HitStop.Instance != null)
+                {
+                    HitStop.Instance.Stop(0.05f);
+                }
+            }
         }
 
         yield return new WaitForSeconds(attackCooldown);

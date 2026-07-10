@@ -39,5 +39,9 @@ public class WeaponCollider : MonoBehaviour
         hitTargets.Add(damageable);
 
         damageable.TakeDamage(damage);
+        if (HitStop.Instance != null)
+        {
+            HitStop.Instance.Stop(0.05f);
+        }
     }
 }

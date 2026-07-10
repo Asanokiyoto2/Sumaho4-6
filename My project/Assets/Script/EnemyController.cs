@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour
 
     private CharacterController controller;
     private EnemyState state = EnemyState.Idle;
+    private bool stunned;
 
     void Awake()
     {
@@ -24,6 +25,8 @@ public class EnemyController : MonoBehaviour
             state = EnemyState.Dead;
             return;
         }
+        if (stunned)
+            return;
         if (target == null)
             return;
 
@@ -50,5 +53,25 @@ public class EnemyController : MonoBehaviour
         transform.forward = dir.normalized;
 
         controller.Move(dir.normalized * moveSpeed * Time.deltaTime);
+    }
+    public void Stun(float time)
+    {
+        if (!stunned)
+        {
+            StartCoroutine(StunRoutine(time));
+        }
+    }
+
+    System.Collections.IEnumerator StunRoutine(float time)
+    {
+        stunned = true;
+
+        state = EnemyState.Hit;
+
+        yield return new WaitForSeconds(time);
+
+        stunned = false;
+
+        state = EnemyState.Idle;
     }
 }

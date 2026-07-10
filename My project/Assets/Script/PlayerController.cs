@@ -4,20 +4,40 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
+    private Animator animator;
     public float moveSpeed = 5f;
 
+    private Health health;
     private CharacterController controller;
+    private PlayerAttack playerAttack;
 
     private PlayerState state;
 
     void Awake()
     {
         controller = GetComponent<CharacterController>();
+        health = GetComponent<Health>();
+        animator = GetComponent<Animator>();
+
+        playerAttack = GetComponent<PlayerAttack>();
     }
 
     void Update()
     {
+        if (health.IsDead)
+        {
+            state = PlayerState.Dead;
+            return;
+        }
+
+        if (state == PlayerState.Attack || state == PlayerState.Dodge)
+        {
+            return;
+        }
+
         Move();
+
+        AttackInput();
     }
 
     void Move()
@@ -47,10 +67,32 @@ public class PlayerController : MonoBehaviour
         {
             transform.forward = move;
             state = PlayerState.Move;
+
+            //animator.SetBool("Move", true);
         }
         else
         {
             state = PlayerState.Idle;
+
+            //animator.SetBool("Move", false);
         }
+    }
+    public void SetState(PlayerState newState)
+    {
+        state = newState;
+    }
+    void AttackInput()
+    {
+        if (Mouse.current == null)
+            return;
+
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            playerAttack.Attack();
+        }
+    }
+    public PlayerState GetState()
+    {
+        return state;
     }
 }

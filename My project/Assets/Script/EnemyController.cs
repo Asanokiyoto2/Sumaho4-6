@@ -17,6 +17,13 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
+        Health health = GetComponent<Health>();
+
+        if (health.IsDead)
+        {
+            state = EnemyState.Dead;
+            return;
+        }
         if (target == null)
             return;
 
@@ -29,6 +36,7 @@ public class EnemyController : MonoBehaviour
         else
         {
             state = EnemyState.Attack;
+            controller.Move(Vector3.zero);
         }
     }
 

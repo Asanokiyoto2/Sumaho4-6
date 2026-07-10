@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using System.Collections;
 
 public class PlayerAttack : MonoBehaviour
@@ -7,15 +6,14 @@ public class PlayerAttack : MonoBehaviour
     public WeaponCollider weapon;
     public float attackTime = 0.35f;
 
+    private PlayerController player;
     private bool attacking;
 
-    void Update()
+    void Start()
     {
-        if (Mouse.current != null &&
-            Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            Attack();
-        }
+        player = GetComponent<PlayerController>();
+
+        weapon.DisableHitbox();
     }
 
     public void Attack()
@@ -30,11 +28,15 @@ public class PlayerAttack : MonoBehaviour
     {
         attacking = true;
 
+        player.SetState(PlayerState.Attack);
+
         weapon.EnableHitbox();
 
         yield return new WaitForSeconds(attackTime);
 
         weapon.DisableHitbox();
+
+        player.SetState(PlayerState.Idle);
 
         attacking = false;
     }

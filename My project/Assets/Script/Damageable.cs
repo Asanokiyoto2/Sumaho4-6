@@ -12,6 +12,13 @@ public class Damageable : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        PlayerGuard guard = GetComponent<PlayerGuard>();
+
+        if (guard != null && guard.IsGuarding)
+        {
+            damage /= 2;
+        }
+
         health.Damage(damage);
     }
 }

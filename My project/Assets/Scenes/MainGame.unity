@@ -629,6 +629,8 @@ GameObject:
   - component: {fileID: 1586855850}
   - component: {fileID: 1586855854}
   - component: {fileID: 1586855853}
+  - component: {fileID: 1586855855}
+  - component: {fileID: 1586855856}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -809,6 +811,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
   weapon: {fileID: 936849616}
   attackTime: 0.35
+--- !u!114 &1586855855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586855845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a083dc75c9941804182384ae6dbe6e8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGuard
+--- !u!114 &1586855856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586855845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db1a752812557684c8172500ba97ecce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDodge
+  dodgeDistance: 3
+  dodgeTime: 0.2
 --- !u!1 &1925030585
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,6 +853,7 @@ GameObject:
   - component: {fileID: 1925030591}
   - component: {fileID: 1925030590}
   - component: {fileID: 1925030593}
+  - component: {fileID: 1925030594}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -992,6 +1021,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f388032622dc744a19b898a022ad5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Damageable
+--- !u!114 &1925030594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925030585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cbbeb664f077f24190ae3965c6b65cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
+  damage: 10
+  attackRange: 2
+  attackCooldown: 1.2
+  target: {fileID: 1586855849}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

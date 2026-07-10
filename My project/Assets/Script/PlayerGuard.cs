@@ -20,14 +20,21 @@ public class PlayerGuard : MonoBehaviour
         if (Mouse.current.rightButton.isPressed)
         {
             IsGuarding = true;
-            player.SetState(PlayerState.Guard);
+
+            if (player.GetState() != PlayerState.Attack &&
+                player.GetState() != PlayerState.Dodge)
+            {
+                player.SetState(PlayerState.Guard);
+            }
         }
         else
         {
             IsGuarding = false;
 
             if (player.GetState() == PlayerState.Guard)
+            {
                 player.SetState(PlayerState.Idle);
+            }
         }
     }
 }

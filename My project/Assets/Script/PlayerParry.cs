@@ -8,12 +8,14 @@ public class PlayerParry : MonoBehaviour
 
     public bool IsParrying { get; private set; }
 
+    private bool parryRunning;
+
     void Update()
     {
         if (Mouse.current == null)
             return;
 
-        if (Mouse.current.rightButton.wasPressedThisFrame)
+        if (Mouse.current.rightButton.wasPressedThisFrame && !parryRunning)
         {
             StartCoroutine(ParryRoutine());
         }
@@ -21,10 +23,12 @@ public class PlayerParry : MonoBehaviour
 
     IEnumerator ParryRoutine()
     {
+        parryRunning = true;
         IsParrying = true;
 
         yield return new WaitForSeconds(parryTime);
 
         IsParrying = false;
+        parryRunning = false;
     }
 }

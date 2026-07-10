@@ -23,13 +23,38 @@ public class PlayerDodge : MonoBehaviour
 
         if (!dodging)
         {
-            if (Keyboard.current.qKey.wasPressedThisFrame)
+            bool leftDodge = false;
+            bool rightDodge = false;
+
+            // PC
+            if (Keyboard.current != null)
             {
-                StartCoroutine(DodgeRoutine(Vector3.left));
+                leftDodge = Keyboard.current.qKey.wasPressedThisFrame;
+                rightDodge = Keyboard.current.eKey.wasPressedThisFrame;
             }
-            if (Keyboard.current.eKey.wasPressedThisFrame)
+
+            // ÉXÉ}Éz
+            if (MobileDodgeButton.LeftPressed)
             {
-                StartCoroutine(DodgeRoutine(Vector3.right));
+                leftDodge = true;
+            }
+
+            if (MobileDodgeButton.RightPressed)
+            {
+                rightDodge = true;
+            }
+
+            if (!dodging)
+            {
+                if (leftDodge)
+                {
+                    StartCoroutine(DodgeRoutine(Vector3.left));
+                }
+
+                if (rightDodge)
+                {
+                    StartCoroutine(DodgeRoutine(Vector3.right));
+                }
             }
         }
     }

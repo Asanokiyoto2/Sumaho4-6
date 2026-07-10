@@ -12,10 +12,24 @@ public class PlayerParry : MonoBehaviour
 
     void Update()
     {
-        if (Mouse.current == null)
-            return;
+        
 
-        if (Mouse.current.rightButton.wasPressedThisFrame && !parryRunning)
+        bool parryInput = false;
+
+        // PC
+        if (Mouse.current != null &&
+            Mouse.current.rightButton.wasPressedThisFrame)
+        {
+            parryInput = true;
+        }
+
+        // ÉXÉ}Éz
+        if (MobileGuardButton.WasPressedThisFrame)
+        {
+            parryInput = true;
+        }
+
+        if (parryInput && !parryRunning)
         {
             StartCoroutine(ParryRoutine());
         }

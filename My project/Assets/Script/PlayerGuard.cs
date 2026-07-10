@@ -14,9 +14,6 @@ public class PlayerGuard : MonoBehaviour
 
     void Update()
     {
-        if (Mouse.current == null)
-            return;
-
         bool guardInput = false;
 
         // PC

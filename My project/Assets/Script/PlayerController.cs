@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private Health health;
     private CharacterController controller;
     private PlayerAttack playerAttack;
-
+    private MobileJoystick joystick;
     private PlayerState state;
 
     void Awake()
@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
 
         playerAttack = GetComponent<PlayerAttack>();
+        joystick = FindFirstObjectByType<MobileJoystick>();
     }
 
     void Update()
@@ -36,12 +37,11 @@ public class PlayerController : MonoBehaviour
         }
 
         Move();
-
-        AttackInput();
     }
 
     void Move()
     {
+
         Vector2 input = Vector2.zero;
 
         if (Keyboard.current != null)
@@ -58,7 +58,11 @@ public class PlayerController : MonoBehaviour
             if (Keyboard.current.dKey.isPressed)
                 input.x += 1;
         }
-
+        // ジョイスティック入力
+        if (joystick != null)
+        {
+            input += joystick.InputDirection;
+        }
         Vector3 move = new Vector3(input.x, 0, input.y);
 
         controller.Move(move.normalized * moveSpeed * Time.deltaTime);
@@ -81,16 +85,7 @@ public class PlayerController : MonoBehaviour
     {
         state = newState;
     }
-    void AttackInput()
-    {
-        if (Mouse.current == null)
-            return;
-
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            playerAttack.Attack();
-        }
-    }
+    
     public PlayerState GetState()
     {
         return state;

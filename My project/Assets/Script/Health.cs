@@ -4,6 +4,8 @@ using System;
 public class Health : MonoBehaviour
 {
     public int maxHP = 100;
+    public int MaxHP => maxHP;
+
 
     public int CurrentHP { get; private set; }
 

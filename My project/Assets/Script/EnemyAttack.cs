@@ -11,21 +11,11 @@ public class EnemyAttack : MonoBehaviour
 
     private bool canAttack = true;
 
-    void Update()
+    public void Attack()
     {
-        if (target == null)
+        if (!canAttack)
             return;
 
-        float distance = Vector3.Distance(transform.position, target.position);
-
-        if (distance <= attackRange && canAttack)
-        {
-            StartCoroutine(AttackRoutine());
-        }
-    }
-
-    IEnumerator AttackRoutine()
-    {
         canAttack = false;
 
         PlayerParry parry = target.GetComponent<PlayerParry>();
@@ -41,15 +31,17 @@ public class EnemyAttack : MonoBehaviour
             if (damageable != null)
             {
                 damageable.TakeDamage(damage);
+
                 if (HitStop.Instance != null)
-                {
                     HitStop.Instance.Stop(0.05f);
-                }
             }
         }
 
-        yield return new WaitForSeconds(attackCooldown);
+        Invoke(nameof(ResetAttack), attackCooldown);
+    }
 
+    void ResetAttack()
+    {
         canAttack = true;
     }
 }

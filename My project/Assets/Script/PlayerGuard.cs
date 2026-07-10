@@ -17,7 +17,22 @@ public class PlayerGuard : MonoBehaviour
         if (Mouse.current == null)
             return;
 
-        if (Mouse.current.rightButton.isPressed)
+        bool guardInput = false;
+
+        // PC
+        if (Mouse.current != null &&
+            Mouse.current.rightButton.isPressed)
+        {
+            guardInput = true;
+        }
+
+        // ÉXÉ}Éz
+        if (MobileGuardButton.IsPressed)
+        {
+            guardInput = true;
+        }
+
+        if (guardInput)
         {
             IsGuarding = true;
 

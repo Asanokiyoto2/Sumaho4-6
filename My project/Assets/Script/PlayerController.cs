@@ -17,10 +17,11 @@ public class PlayerController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         health = GetComponent<Health>();
-        animator = GetComponent<Animator>();
+
+        // 子オブジェクトのAnimatorも取得する
+        animator = GetComponentInChildren<Animator>();
 
         playerAttack = GetComponent<PlayerAttack>();
-        joystick = FindFirstObjectByType<MobileJoystick>();
     }
 
     void Update()
@@ -72,13 +73,13 @@ public class PlayerController : MonoBehaviour
             transform.forward = move;
             state = PlayerState.Move;
 
-            //animator.SetBool("Move", true);
+            animator.SetBool("Move", true);
         }
         else
         {
             state = PlayerState.Idle;
 
-            //animator.SetBool("Move", false);
+            animator.SetBool("Move", false);
         }
     }
     public void SetState(PlayerState newState)

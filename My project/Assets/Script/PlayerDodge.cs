@@ -61,16 +61,38 @@ public class PlayerDodge : MonoBehaviour
     IEnumerator DodgeRoutine(Vector3 direction)
     {
         dodging = true;
+
         player.SetState(PlayerState.Dodge);
+
+        // Animator取得
+        Animator animator = GetComponentInChildren<Animator>();
+
+        // 回避アニメーション再生
+        if (animator != null)
+        {
+            if (direction == Vector3.left)
+            {
+                animator.SetTrigger("RollLeft");
+            }
+            else if (direction == Vector3.right)
+            {
+                animator.SetTrigger("RollRight");
+            }
+        }
+
         float timer = 0f;
 
         while (timer < dodgeTime)
         {
             controller.Move(direction * (dodgeDistance / dodgeTime) * Time.deltaTime);
+
             timer += Time.deltaTime;
+
             yield return null;
         }
+
         player.SetState(PlayerState.Idle);
+
         dodging = false;
     }
 }

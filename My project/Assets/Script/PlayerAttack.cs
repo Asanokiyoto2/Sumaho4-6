@@ -30,11 +30,27 @@ public class PlayerAttack : MonoBehaviour
 
         player.SetState(PlayerState.Attack);
 
+        // プレイヤーのAnimator取得
+        Animator animator = GetComponentInChildren<Animator>();
+
+        // 攻撃アニメーション開始
+        if (animator != null)
+        {
+            animator.SetTrigger("Attack");
+        }
+
+        // 少し待って剣を振るタイミングで当たり判定ON
+        yield return new WaitForSeconds(0.15f);
+
         weapon.EnableHitbox();
 
-        yield return new WaitForSeconds(attackTime);
+        // 当たり判定を少しだけ有効
+        yield return new WaitForSeconds(0.15f);
 
         weapon.DisableHitbox();
+
+        // アニメーション終了待ち
+        yield return new WaitForSeconds(0.15f);
 
         player.SetState(PlayerState.Idle);
 

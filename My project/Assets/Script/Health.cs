@@ -32,7 +32,7 @@ public class Health : MonoBehaviour
 
         if (CurrentHP <= 0)
         {
-            Animator animator = GetComponent<Animator>();
+            Animator animator = GetComponentInChildren<Animator>();
 
             if (animator != null)
             {
@@ -40,6 +40,16 @@ public class Health : MonoBehaviour
             }
 
             OnDeath?.Invoke();
+
+            if (CompareTag("Player"))
+            {
+                GameManager.Instance.GameOver();
+            }
+
+            if (CompareTag("Enemy"))
+            {
+                GameManager.Instance.Victory();
+            }
         }
     }
 }

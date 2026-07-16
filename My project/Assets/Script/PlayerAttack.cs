@@ -38,6 +38,7 @@ public class PlayerAttack : MonoBehaviour
         {
             animator.SetTrigger("Attack");
         }
+        AudioManager.Instance.PlayAttack();
 
         // 少し待って剣を振るタイミングで当たり判定ON
         yield return new WaitForSeconds(0.15f);

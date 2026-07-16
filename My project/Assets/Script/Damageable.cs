@@ -16,6 +16,8 @@ public class Damageable : MonoBehaviour
 
         if (guard != null && guard.IsGuarding)
         {
+            AudioManager.Instance.PlayGuard();
+
             damage /= 2;
         }
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class WeaponCollider : MonoBehaviour
 {
     public int damage = 20;
+    public GameObject hitEffectPrefab;
 
     private Collider weaponCollider;
     private HashSet<Damageable> hitTargets = new HashSet<Damageable>();
@@ -37,8 +38,19 @@ public class WeaponCollider : MonoBehaviour
             return;
 
         hitTargets.Add(damageable);
+        AudioManager.Instance.PlayHit();
 
         damageable.TakeDamage(damage);
+        if (hitEffectPrefab != null)
+        {
+
+            GameObject effect = Instantiate(
+                hitEffectPrefab,
+                other.ClosestPoint(transform.position),
+                Quaternion.identity);
+
+            Destroy(effect, 2f);
+        }
         if (HitStop.Instance != null)
         {
             HitStop.Instance.Stop(0.05f);

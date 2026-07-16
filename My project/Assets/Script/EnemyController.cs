@@ -5,6 +5,8 @@ using System.Collections;
 [RequireComponent(typeof(CharacterController))]
 public class EnemyController : MonoBehaviour
 {
+
+    private Animator animator;
     [Header("攻撃設定")]
 
     // 攻撃前の予備動作時間（プレイヤーがパリィしやすくする）
@@ -41,8 +43,9 @@ public class EnemyController : MonoBehaviour
 
     void Awake()
     {
-        // CharacterController取得
         controller = GetComponent<CharacterController>();
+
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -95,6 +98,7 @@ public class EnemyController : MonoBehaviour
     {
         // 状態変更
         state = EnemyState.Chase;
+        animator.SetBool("Move", true);
 
         // プレイヤー方向
         Vector3 dir = target.position - transform.position;
@@ -131,6 +135,7 @@ public class EnemyController : MonoBehaviour
         stunned = true;
 
         state = EnemyState.Hit;
+        animator.SetTrigger("Hit");
 
         // 指定時間待つ
         yield return new WaitForSeconds(time);
@@ -151,6 +156,8 @@ public class EnemyController : MonoBehaviour
         attacking = true;
 
         state = EnemyState.Attack;
+        animator.SetTrigger("Attack");
+        animator.SetBool("Move", false);
 
         // 攻撃予告
         yield return new WaitForSeconds(attackWindup);

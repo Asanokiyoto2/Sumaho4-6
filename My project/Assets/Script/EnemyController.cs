@@ -57,6 +57,7 @@ public class EnemyController : MonoBehaviour
         if (health.IsDead)
         {
             state = EnemyState.Dead;
+            animator.SetBool("Move", false);
             return;
         }
 
@@ -81,6 +82,8 @@ public class EnemyController : MonoBehaviour
         {
             // ˆê’U’â~
             controller.Move(Vector3.zero);
+
+            animator.SetBool("Move", false);
 
             // UŒ‚’†‚Å‚È‚¯‚ê‚ÎUŒ‚ŠJn
             if (!attacking)
@@ -144,6 +147,7 @@ public class EnemyController : MonoBehaviour
         stunned = false;
 
         state = EnemyState.Idle;
+        animator.SetBool("Move", false);
     }
 
 

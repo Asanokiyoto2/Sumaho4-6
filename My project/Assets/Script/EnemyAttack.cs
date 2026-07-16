@@ -31,6 +31,10 @@ public class EnemyAttack : MonoBehaviour
             if (damageable != null)
             {
                 damageable.TakeDamage(damage);
+                if (CameraShake.Instance != null)
+                {
+                    CameraShake.Instance.Shake();
+                }
 
                 if (HitStop.Instance != null)
                     HitStop.Instance.Stop(0.05f);

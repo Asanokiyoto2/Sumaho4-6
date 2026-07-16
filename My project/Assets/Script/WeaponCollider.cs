@@ -41,6 +41,10 @@ public class WeaponCollider : MonoBehaviour
         AudioManager.Instance.PlayHit();
 
         damageable.TakeDamage(damage);
+        if (CameraShake.Instance != null)
+        {
+            CameraShake.Instance.Shake();
+        }
         if (hitEffectPrefab != null)
         {
 
